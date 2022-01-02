@@ -43,6 +43,10 @@ dp = Dispatcher(bot)
 @dp.message_handler(commands=['start'])
 async def begin(message :types.Message):
     await bot.send_message(message.chat.id, 'Привет {0.first_name}'.format(message.from_user), reply_markup = mainmenu)
+   
+@dp.message_handler(commands=['dima'])
+async def dima(message :types.Message):
+    await bot.send_message(message.chat.id, "Дима Тодорика - амеба🦠", reply_markup = mainmenu)
 
 @dp.message_handler()
 async def navigation(message: types.Message):
