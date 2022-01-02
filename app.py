@@ -6,7 +6,7 @@ import requests
 import random
 
 #-------------------------------
-btnMain = KeyboardButton('◀️главное меню')
+btnMain = KeyboardButton('◀Главное меню')
 ###----Links----####
 TOKEN = '2136113393:AAEhIWfdRQKcI9IlSAf_cVFm8iOb8U87GFE'
 API_LINK = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5' 
@@ -24,7 +24,7 @@ btnBtc = InlineKeyboardButton('BTC💎', callback_data='BTC')
 course = InlineKeyboardMarkup(resize_keyboard = True).add(btnUsd, btnEur, btnRub, btnBtc)
 ###----Markups'Info'----###
 btnAboutBot = KeyboardButton('👾О боте')
-btnAboutMe = KeyboardButton('О создатиле')
+btnAboutMe = KeyboardButton('🤓О создатиле')
 info = ReplyKeyboardMarkup(resize_keyboard = True).add(btnAboutBot,btnAboutMe,btnMain)
 #-------------------------------
 
@@ -42,7 +42,7 @@ dp = Dispatcher(bot)
 
 @dp.message_handler(commands=['start'])
 async def begin(message :types.Message):
-    await bot.send_message(message.chat.id, 'Привет {0.first_name}'.format(message.from_user), reply_markup=mainmenu)
+    await bot.send_message(message.chat.id, 'Привет {0.first_name}'.format(message.from_user), reply_markup = mainmenu)
 
 @dp.message_handler()
 async def navigation(message: types.Message):
@@ -50,6 +50,16 @@ async def navigation(message: types.Message):
         await bot.send_message(message.chat.id, random.randint(0,100))
     elif message.text == '💱Курс валют':
         await bot.send_message(message.chat.id, 'Курс которой валюты, вы хотите узнать?📈', reply_markup = course)
+    elif message.text == '📜Информация':
+        await bot.send_message(message.chat.id, '📜Информация', reply_markup=info)
+    if message.text == '👾О боте':
+        await bot.send_message(message.chat.id, 'Данный бот👾 создан в целях изучения языка програмирования Python🐍,\nи не несёт никакой комерчиской цели🌍.Приятного пользования🍀')
+    elif message.text == '🤓О создатиле':
+        await bot.send_message(message.chat.id, 'Привет меня зовут Олежан🧑, я разроботчик данного бота📦.\nМой дискорд бот: https://bit.ly/3pKOzzd')
+    elif message.text == '◀Главное меню':
+        await bot.send_message(message.chat.id, '◀Главное меню', reply_markup = mainmenu)
+
+
 
 
 @dp.callback_query_handler(lambda c: c.data == "RUR")
