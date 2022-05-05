@@ -6,11 +6,17 @@ import requests
 import random
 
 #-------------------------------
-btnMain = KeyboardButton('◀Главное🇺🇦 меню')
+#Russia
+#-------------------------------
+btnMain = KeyboardButton('◀Главное меню')
 ###----Links----####
 TOKEN = '2136113393:AAEhIWfdRQKcI9IlSAf_cVFm8iOb8U87GFE'
 API_LINK = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5' 
 response = requests.get(API_LINK).json()
+#Chose language menu
+btnRussia = KeyboardButton('Русский🐷')
+btnEnglish = KeyboardButton('English')
+choselanguage = ReplyKeyboardMarkup(resize_keyboard = True).add(btnRussia,btnEnglish)
 ###----Markups'Main menu'----###
 btnRandom = KeyboardButton('🎲Рандомное число')
 btnCourse = KeyboardButton('💱Курс валют')
@@ -27,30 +33,34 @@ btnAboutBot = KeyboardButton('👾О боте')
 btnAboutMe = KeyboardButton('🤓О создатиле')
 info = ReplyKeyboardMarkup(resize_keyboard = True).add(btnAboutBot,btnAboutMe,btnMain)
 #-------------------------------
-
-
-
-
+#English
+#-------------------------------
+ebtnMain = KeyboardButton('◀Main menu')
+###----Markups'Main menu'----###
+ebtnRandom = KeyboardButton('🎲Random number')
+ebtnCourse = KeyboardButton('💱Exchange rates')
+ebtnInfo = KeyboardButton('📜Info')
+emainmenu = ReplyKeyboardMarkup(resize_keyboard = True).add(ebtnCourse, ebtnRandom, ebtnInfo)
+###----Markups'Info'----###
+ebtnAboutBot = KeyboardButton('👾About bot')
+ebtnAboutMe = KeyboardButton('🤓About owner')
+einfo = ReplyKeyboardMarkup(resize_keyboard = True).add(ebtnAboutBot,ebtnAboutMe,ebtnMain)
+#-------------------------------
 def printCoin(buy):
     return "Курс покупки:" + str(buy)
-
-
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
 
-
 @dp.message_handler(commands=['start'])
 async def begin(message :types.Message):
-    await bot.send_message(message.chat.id, 'Привет {0.first_name}'.format(message.from_user), reply_markup = mainmenu)
-   
-@dp.message_handler(commands=['dima'])
-async def dima(message :types.Message):
-    await bot.send_message(message.chat.id, "Дима Тодорика - амеба🦠", reply_markup = mainmenu)
+    await bot.send_message(message.chat.id, 'Привет {0.first_name}'.format(message.from_user), reply_markup = choselanguage)
 
 @dp.message_handler()
-async def navigation(message: types.Message):
-    if message.text == '🎲Рандомное число':
+async def navigationru(message: types.Message):
+    if message.text == 'Русский🐷':
+        await bot.send_message(message.chat.id, 'Русский🐷', reply_markup=mainmenu)
+    elif message.text == '🎲Рандомное число':
         await bot.send_message(message.chat.id, random.randint(0,100))
     elif message.text == '💱Курс валют':
         await bot.send_message(message.chat.id, 'Курс которой валюты, вы хотите узнать?📈', reply_markup = course)
@@ -62,8 +72,20 @@ async def navigation(message: types.Message):
         await bot.send_message(message.chat.id, 'Привет меня зовут Олежан🧑, я разроботчик данного бота📦.\nМой дискорд бот: https://bit.ly/3pKOzzd')
     elif message.text == '◀Главное меню':
         await bot.send_message(message.chat.id, '◀Главное меню', reply_markup = mainmenu)
-
-
+    elif message.text == 'English':
+        await bot.send_message(message.chat.id, 'English', reply_markup=emainmenu)
+    elif message.text == '🎲Random number':
+        await bot.send_message(message.chat.id, random.randint(0,100))
+    elif message.text == '💱Exchange rates':
+        await bot.send_message(message.chat.id, 'Which currency rate do you want to know?(to UAN)📈', reply_markup = course)
+    elif message.text == '📜Info':
+        await bot.send_message(message.chat.id, '📜Info', reply_markup=einfo)
+    if message.text == '👾About bot':
+        await bot.send_message(message.chat.id, 'This bot👾 created to learn Python🐍,\nand does not serve any commercial purpose🌍.Good luck🍀')
+    elif message.text == '🤓About owner':
+        await bot.send_message(message.chat.id, 'Hi my name is Oleh🧑, i am cretror of this bot📦.\nMy discord bot: https://bit.ly/3pKOzzd')
+    elif message.text == '◀Main menu':
+        await bot.send_message(message.chat.id, '◀Main menu', reply_markup = emainmenu)
 
 
 @dp.callback_query_handler(lambda c: c.data == "RUR")
