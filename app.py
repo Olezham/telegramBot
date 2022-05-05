@@ -6,7 +6,7 @@ import requests
 import random
 
 #-------------------------------
-btnMain = KeyboardButton('◀Главное меню')
+btnMain = KeyboardButton('◀Главное🇺🇦 меню')
 ###----Links----####
 TOKEN = '2136113393:AAEhIWfdRQKcI9IlSAf_cVFm8iOb8U87GFE'
 API_LINK = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5' 
