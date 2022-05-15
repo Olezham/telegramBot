@@ -10,7 +10,7 @@ import random
 #-------------------------------
 btnMain = KeyboardButton('◀Главное меню')
 ###----Links----####
-TOKEN = '2136113393:AAEhIWfdRQKcI9IlSAf_cVFm8iOb8U87GFE'
+TOKEN = os.environ['TOKEN']
 API_LINK = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5' 
 response = requests.get(API_LINK).json()
 #Chose language menu
